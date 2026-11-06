@@ -1,0 +1,56 @@
+#include <stdio.h>
+
+int main() {
+    int logins[4][5], falhas[4];
+    int n, totalAlertas = 0, maiorFalhas = 0;
+    int i, j;
+
+    printf("=== ALERTA DE TENTATIVAS DE LOGIN ===\n");
+    printf("Digite o numero de contas (1 a 4): ");
+    scanf("%d", &n);
+
+    while (n < 1 || n > 4) {
+        printf("Valor invalido. Digite de 1 a 4: ");
+        scanf("%d", &n);
+    }
+
+    for (i = 0; i < n; i++) {
+        falhas[i] = 0;
+
+        printf("\nConta %d\n", i + 1);
+
+        for (j = 0; j < 5; j++) {
+            printf("Tentativa %d (0 = falha, 1 = sucesso): ", j + 1);
+            scanf("%d", &logins[i][j]);
+
+            while (logins[i][j] != 0 && logins[i][j] != 1) {
+                printf("Valor invalido. Digite 0 ou 1: ");
+                scanf("%d", &logins[i][j]);
+            }
+
+            if (logins[i][j] == 0) {
+                falhas[i]++;
+            }
+        }
+
+        printf("Falhas: %d\n", falhas[i]);
+
+        if (falhas[i] >= 3) {
+            printf("Resultado: ALERTA\n");
+            totalAlertas++;
+        } else {
+            printf("Resultado: OK\n");
+        }
+
+        if (falhas[i] > maiorFalhas) {
+            maiorFalhas = falhas[i];
+        }
+    }
+
+    printf("\n=== RESUMO FINAL ===\n");
+    printf("Total de contas analisadas: %d\n", n);
+    printf("Total de contas com alerta: %d\n", totalAlertas);
+    printf("Maior numero de falhas: %d\n", maiorFalhas);
+
+    return 0;
+}
